@@ -110,3 +110,19 @@ for (let [index, elem] of ['a', 'b'].entries()) {
 incluudes()   //方法返回一个布尔值，表示某个数组是否包含给定的值
 flat()  //用于将嵌套的数组“拉平”，变成一维的数组。该方法返回一个新数组，对原数据没有影响。
 flat(1) //表示拉平一层，Infinity关键字可以将所有层拉平
+
+
+setTimeout(function(){
+  console.log(4)
+},0); 
+new Promise(function(resolve){
+   console.log(1) 
+   for( var i=0 ; i<10000 ; i++ ){
+      i==9999 && resolve() 
+    } 
+    console.log(2) 
+  }).then(function(){ 
+      console.log(5) 
+    });
+       console.log(3);
+

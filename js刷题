@@ -1,0 +1,63 @@
+//写一个通用的事件侦听器函数
+/*
+分为四步
+1.添加事件
+2.获取事件对象，事件目标，阻止事件的默认行为
+3.删除事件
+4.取消事件冒泡
+*/
+let EventUtil = {
+    //分别根据情况使用dom2，IE，dom0方式来添加事件
+    addHander: function (element,type,handler){
+        if (element.addEventListener) {
+            element.addEventListener(type,handler,false);
+        } else if (element.attachEvent) {
+            element.attachEvent("on"+type,handler);
+        } else {
+            element["on"+type] = handler;
+        }
+    },
+
+//根据情况分别获取dom或IE中的事件对象，事件目标，阻止事件的默认行为发生
+    getEvent: function (event) {
+    return event ? event:window.event;
+},
+    getTarget: function (event) {
+        return event.target || event.srcElement;
+    },
+    preventDefault: function (event) {
+        if (event.preventDefault) {
+            event.preventDefault();
+        } else {
+            event.returnValue = false;
+        }
+    },
+
+    //根据情况分别用DOM2,IE,DOM0的方式删除事件
+    removeEvent: function (element,type,handler) {
+        if (element.removeHandler) {
+            element.removeHandler;
+        } else if (element.detachEvent){
+            element.detachEvent("on"+type,handler);
+        } else {
+            element["on"+type] = null;
+        }
+    },
+
+    //根据情况取消DOM或者IE中的事件冒泡
+    stopProgation: function (event) {
+        if (event.stopProgation) {
+            event.stopProgation();
+        } else {
+            event.cancelBubble = true;
+        }
+    }
+}
+
+var btn = document.getElementById("myBtn");
+handler = function () {
+    alert("click");
+}
+
+EventUtil.addHander(btn,"click",handler);
+EventUtil.removeHandler(btn,"click",handler);
